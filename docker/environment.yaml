@@ -1,0 +1,54 @@
+name: scrna_benchmark
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  # Core Python
+  - python=3.10
+  - pip
+  
+  # Single-cell analysis
+  - scanpy
+  - anndata
+  - leidenalg
+  - louvain
+  
+  # Data science stack
+  - numpy>=1.24,<2.0
+  - pandas
+  - scipy
+  - scikit-learn
+  - statsmodels
+  
+  # Visualization
+  - matplotlib
+  - seaborn!=0.13.0
+  
+  # File handling
+  - h5py
+  - pytables
+  
+  # R integration
+  - rpy2
+  - r-base
+  
+  # Workflow and reproducibility
+  - snakemake-minimal
+  - jupyter
+  - jupyterlab
+  
+  # Testing
+  - pytest
+  - pytest-cov
+  
+  # Utilities
+  - tqdm
+  - pyyaml
+  - requests
+  
+  # Pip-only packages
+  - pip:
+      - geosketch
+      - harmonypy
+      - session-info

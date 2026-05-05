@@ -1,0 +1,118 @@
+GSE139829:
+  cancer_type: uveal_melanoma
+  reference: "Durante et al. 2020, Nat Commun"
+  cell_types:
+    Tumor cells:
+      markers: [MLANA, MITF, PMEL, TYR, DCT, TYRP1, SOX10]
+      description: "Melanoma cells, melanocyte lineage"
+    T cells:
+      markers: [CD3D, CD3E, CD2, CD8A, CD4, TRAC, TRBC1]
+      description: "T lymphocytes (CD4+ and CD8+)"
+    B cells:
+      markers: [CD19, MS4A1, CD79A, CD79B, PAX5]
+      description: "B lymphocytes"
+    Plasma cells:
+      markers: [MZB1, IGHG1, JCHAIN, SDC1, XBP1]
+      description: "Antibody-secreting cells"
+    Macrophages:
+      markers: [CD68, CD14, CSF1R, AIF1, FCGR3A, CD163]
+      description: "Monocytes/macrophages"
+    Endothelial:
+      markers: [PECAM1, VWF, CDH5, CLDN5, FLT1, ESAM]
+      description: "Vascular endothelial cells"
+    Fibroblasts:
+      markers: [COL1A1, COL1A2, DCN, LUM, FAP, PDGFRA]
+      description: "Cancer-associated fibroblasts"
+    Photoreceptors:
+      markers: [RCVRN, RHO, PDE6A, GNAT1, ROM1]
+      description: "Retinal photoreceptor cells"
+    RPE cells:
+      markers: [RPE65, BEST1, RLBP1, RGR, LRAT]
+      description: "Retinal pigment epithelial cells"
+
+GSE176078:
+  cancer_type: breast
+  reference: "Wu et al. 2021, Nat Genet"
+  cell_types:
+    T-cells:
+      markers: [CD3D, CD3E, CD2, TRAC, IL7R, CD8A, CD4]
+      description: "T lymphocytes"
+    B-cells:
+      markers: [MS4A1, CD79A, CD19, CD79B, PAX5]
+      description: "B lymphocytes"
+    Myeloid:
+      markers: [CD68, LYZ, CD14, FCGR3A, CSF1R, ITGAM]
+      description: "Monocytes, macrophages, DCs"
+    Epithelial:
+      markers: [EPCAM, KRT18, KRT19, KRT8, CDH1]
+      description: "Normal and malignant epithelial cells"
+    CAFs:
+      markers: [COL1A1, DCN, COL1A2, FAP, PDGFRA, PDGFRB]
+      description: "Cancer-associated fibroblasts"
+    Endothelial:
+      markers: [PECAM1, VWF, CDH5, CLDN5, FLT1]
+      description: "Vascular endothelial cells"
+    PVL:
+      markers: [RGS5, ACTA2, MCAM, MYL9, TAGLN]
+      description: "Perivascular-like cells"
+    Plasmablasts:
+      markers: [JCHAIN, MZB1, IGHG1, SDC1, XBP1]
+      description: "Antibody-secreting cells"
+
+GSE131907:
+  cancer_type: lung
+  reference: "Kim et al. 2020, Nat Commun"
+  cell_types:
+    Epithelial cells:
+      markers: [EPCAM, KRT18, KRT19, KRT7, CDH1, MUC1]
+      description: "Normal and malignant epithelial/alveolar cells"
+    T lymphocytes:
+      markers: [CD3D, CD3E, CD2, IL7R, CD8A, CD4]
+      description: "T cells (CD4+ and CD8+)"
+    B lymphocytes:
+      markers: [MS4A1, CD79A, CD19, CD79B, PAX5]
+      description: "B cells"
+    NK cells:
+      markers: [GNLY, NKG7, KLRD1, KLRB1, NCAM1]
+      description: "Natural killer cells"
+    Myeloid cells:
+      markers: [CD68, LYZ, CD14, FCGR3A, CSF1R, CD163]
+      description: "Monocytes, macrophages, DCs"
+    Mast cells:
+      markers: [TPSAB1, TPSB2, CPA3, KIT, MS4A2]
+      description: "Mast cells"
+    Fibroblasts:
+      markers: [COL1A1, COL1A2, DCN, LUM, FAP, PDGFRA]
+      description: "Stromal fibroblasts"
+    Endothelial cells:
+      markers: [PECAM1, VWF, CDH5, CLDN5, ESAM]
+      description: "Vascular endothelial cells"
+    Dendritic cells:
+      markers: [CLEC9A, CLEC10A, CD1C, FCER1A, LILRA4]
+      description: "Conventional and plasmacytoid DCs"
+
+GSE72056:
+  cancer_type: melanoma
+  reference: "Tirosh et al. 2016, Science"
+  cell_types:
+    Malignant:
+      markers: [MLANA, MITF, PMEL, TYR, SOX10, DCT]
+      description: "Malignant melanoma cells"
+    T cells:
+      markers: [CD3D, CD3E, CD2, CD8A, CD4, IL7R]
+      description: "T lymphocytes"
+    B cells:
+      markers: [MS4A1, CD79A, CD19, CD79B]
+      description: "B lymphocytes"
+    Macrophages:
+      markers: [CD68, CD14, LYZ, AIF1, FCGR3A]
+      description: "Macrophages"
+    Endothelial:
+      markers: [PECAM1, VWF, CDH5, CLDN5]
+      description: "Endothelial cells"
+    CAFs:
+      markers: [COL1A1, FAP, DCN, COL1A2, PDGFRA]
+      description: "Cancer-associated fibroblasts"
+    NK cells:
+      markers: [GNLY, NKG7, KLRD1, NCAM1]
+      description: "Natural killer cells"

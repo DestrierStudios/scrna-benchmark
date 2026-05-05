@@ -1,0 +1,60 @@
+# Data files (too large for git)
+data/raw/
+data/processed/
+data/subsampled/
+*.h5ad
+*.h5
+*.mtx
+*.mtx.gz
+
+# Results (regenerable)
+results/metrics/
+results/pipelines/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment
+.env
+.venv
+env/
+venv/
+.conda/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Snakemake
+.snakemake/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+data/raw/
+data/processed/
+data/subsampled/
+results/*/cache/
+__pycache__/

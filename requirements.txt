@@ -1,0 +1,28 @@
+# Python dependencies for scRNA-seq benchmarking
+# Use conda environment for full reproducibility
+
+scanpy
+anndata
+leidenalg
+louvain
+numpy>=1.24,<2.0
+pandas
+scipy
+scikit-learn
+statsmodels
+matplotlib
+seaborn
+h5py
+tables
+snakemake
+jupyter
+jupyterlab
+pytest
+pytest-cov
+tqdm
+pyyaml
+requests
+rpy2
+geosketch
+harmonypy
+session-info

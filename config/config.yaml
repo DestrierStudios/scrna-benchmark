@@ -1,0 +1,189 @@
+datasets:
+  # Note: GSE131928 (Glioblastoma) excluded — only processed TPM available, not raw counts
+
+  GSE139829:
+    description: "Uveal Melanoma (Durante et al. 2020)"
+    platform: "10x"
+    path: "data/raw/GSE139829"
+    format: "10x_tar"
+    expected_cells: 60000
+    cancer_type: "uveal_melanoma"
+
+  GSE176078:
+    description: "Breast Cancer (Wu et al. 2021)"
+    platform: "10x"
+    path: "data/raw/GSE176078"
+    format: "nested_tar_gz"  # each sample is a tar.gz containing 10x files
+    expected_cells: 130000
+    cancer_type: "breast"
+
+  GSE131907:
+    description: "Lung Adenocarcinoma (Kim et al. 2020)"
+    platform: "10x"
+    path: "data/raw/GSE131907"
+    format: "umi_matrix"    # pre-built UMI count matrix
+    matrix_file: "GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz"
+    annotation_file: "GSE131907_Lung_Cancer_cell_annotation.txt.gz"
+    expected_cells: 208000
+    cancer_type: "lung"
+
+  GSE72056:
+    description: "Cutaneous Melanoma (Tirosh et al. 2016)"
+    platform: "Smart-seq2"
+    path: "data/raw/GSE72056"
+    format: "text_matrix"   # single text matrix (Smart-seq2, no UMI)
+    matrix_file: "GSE72056_melanoma_single_cell_revised_v2.txt.gz"
+    expected_cells: 4600
+    cancer_type: "melanoma"
+
+primary_datasets:
+  - GSE139829
+  - GSE176078
+  - GSE131907
+
+validation_datasets:
+  - GSE72056
+
+qc:
+  min_genes_per_cell: 200
+  max_genes_per_cell: 8000
+  max_pct_mito: 20          # percent mitochondrial reads
+  min_cells_per_gene: 3
+
+normalization:
+  log:
+    description: "Log-normalization (Scanpy default)"
+    engine: "python"         # scanpy
+    target_sum: 10000
+
+  scran:
+    description: "Scran pooling-based normalization"
+    engine: "r"              # scran package
+    min_cluster_size: 100
+
+  sctransform:
+    description: "SCTransform variance-stabilizing transformation"
+    engine: "r"              # Seurat/sctransform
+    variable_features: 3000
+
+  pearson_residuals:
+    description: "Pearson residuals (Lause et al. 2021)"
+    engine: "python"         # scanpy experimental
+    n_top_genes: 3000
+    theta: 100               # overdispersion parameter
+
+  analytic_pearson:
+    description: "Analytic Pearson residuals (Germain et al. 2020)"
+    engine: "python"
+    n_top_genes: 3000
+
+feature_selection:
+  n_top_genes: 3000          # highly variable genes
+  flavor: "seurat_v3"        # for log normalization
+  # scran/sctransform/pearson methods handle their own feature selection
+
+dim_reduction:
+  n_pcs: 50                  # PCA components to compute
+  n_neighbors: 15            # for neighborhood graph
+  metric: "euclidean"
+
+clustering:
+  leiden:
+    description: "Leiden algorithm"
+    engine: "python"         # leidenalg
+    resolutions: [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.5, 2.0]
+
+  louvain:
+    description: "Louvain algorithm"
+    engine: "python"         # louvain
+    resolutions: [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.5, 2.0]
+
+  hierarchical:
+    description: "Agglomerative hierarchical clustering"
+    engine: "python"         # sklearn
+    n_clusters: [5, 8, 10, 15, 20, 25, 30]
+    linkage: "ward"
+
+  hdbscan:
+    description: "HDBSCAN density-based clustering"
+    engine: "python"         # hdbscan
+    min_cluster_sizes: [15, 25, 50, 100]
+    min_samples: [5, 10]
+
+evaluation:
+  # Clustering agreement (require ground truth labels)
+  supervised:
+    - ARI                    # Adjusted Rand Index
+    - NMI                    # Normalized Mutual Information
+    - homogeneity
+    - completeness
+
+  # Internal quality (no labels needed)
+  unsupervised:
+    - silhouette             # Silhouette coefficient
+    - calinski_harabasz      # Calinski-Harabasz index
+    - davies_bouldin         # Davies-Bouldin index
+
+  # Biological metrics (novel contribution)
+  biological:
+    - BDS                    # Biological Discordance Score
+    - marker_gene_overlap    # overlap with published markers
+    - cell_type_purity       # how well clusters map to cell types
+
+bds:
+  # Number of top marker genes per cluster to compare across pipelines
+  n_marker_genes: 50
+  # Method for differential expression to find markers
+  de_method: "wilcoxon"
+  # Minimum log fold change for a gene to count as a marker
+  min_logfc: 0.25
+  # Minimum fraction of cells expressing the gene
+  min_pct: 0.1
+  # Number of bootstrap iterations for confidence intervals
+  n_bootstrap: 1000
+  # Reference pipeline to compare against (Seurat defaults)
+  reference_pipeline:
+    normalization: "log"
+    clustering: "leiden"
+    resolution: 0.8
+
+meta_ranking:
+  method: "borda_count"      # rank aggregation method
+  n_bootstrap: 1000          # bootstrap iterations for CIs
+  confidence_level: 0.95     # for confidence intervals
+  metrics_to_rank:
+    - ARI
+    - NMI
+    - silhouette
+    - BDS
+
+statistics:
+  # Primary comparison: all methods vs baseline
+  baseline:
+    normalization: "log"
+    clustering: "leiden"
+  # Multiple testing correction
+  correction: "BH"           # Benjamini-Hochberg
+  alpha: 0.05
+  # Minimum effect size of interest
+  min_delta_ari: 0.05
+
+subsampling:
+  enabled: true
+  methods:
+    - "geometric_sketching"  # geosketch
+    - "random_stratified"
+  target_cells: 20000        # subsample to this many cells
+  n_repeats: 5               # repeat subsampling for stability
+
+reproducibility:
+  random_seed: 42
+  n_threads: 8
+  log_session_info: true
+
+output:
+  processed_data: "data/processed"
+  results: "results"
+  figures: "results/figures"
+  tables: "results/tables"
+  logs: "results/logs"
